@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:server": "node ./lib/index.js",
-    "start:server-m": "node --experimental-modules --experimental-json-modules --experimental-specifier-resolution=node",
+    "start:server": "node --experimental-modules --experimental-json-modules --experimental-specifier-resolution=node --inspect -- lib/index.js",
     "start": "npm run build:live",
-    "build": "tsc -p .",
-    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
-    "build2:live": "ts-node-dev --respawn --inspect --debug -- src/index.ts",
+    "build": "npm run clean && tsc -p .",
+    "build:live": "ts-node-dev --respawn --debug --experimental-modules --experimental-json-modules --experimental-specifier-resolution=node -- src/index.ts",
+    "clean": "rm -rf ./dist && rm -f ./tsconfig.tsbuildinfo.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,8 +16,6 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^13.7.4",
-    "nodemon": "^2.0.2",
-    "ts-node": "^8.6.2",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.2"
   }

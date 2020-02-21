@@ -1,7 +1,13 @@
-import { sharedFn } from "./shared";
+import { log } from './utils/logger';
 
 export class App {
-	start (): void {
-		console.warn(sharedFn());
-	}
+  interval: NodeJS.Timeout | null = null;
+
+  start (): void {
+    log('start!');
+
+    this.interval = setInterval(() => {
+      log('5 seconds passed');
+    }, 5000);
+  }
 }
