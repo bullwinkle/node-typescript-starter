@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:server": "node --experimental-modules --experimental-json-modules --experimental-specifier-resolution=node --inspect -- lib/index.js",
     "start": "npm run build:live",
+    "start:server": "npm run build && node --inspect -- dist/index.js",
     "build": "npm run clean && tsc -p .",
-    "build:live": "ts-node-dev --respawn --debug --experimental-modules --experimental-json-modules --experimental-specifier-resolution=node -- src/index.ts",
+    "build:live": "ts-node-dev --respawn --debug --prefer-ts --inspect -- src/index.ts",
     "clean": "rm -rf ./dist && rm -f ./tsconfig.tsbuildinfo.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +18,16 @@
     "@types/node": "^13.7.4",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.2",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.6.0",
+    "graphql-import": "^1.0.0-beta.2",
+    "graphql-tools": "^4.0.7"
+  },
+  "engines": {
+    "node": "^13"
   }
 }

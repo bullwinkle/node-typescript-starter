@@ -1,13 +1,26 @@
-import { log } from './utils/logger';
+import express from 'express';
+import { Server } from 'http';
+
+import { graphqlMiddleware } from './graphql/graphql-middleware';
+import { createLogger } from './utils/logger';
 
 export class App {
-  interval: NodeJS.Timeout | null = null;
+  app = express();
+  log = createLogger('app');
+
+  server?: Server;
 
   start (): void {
-    log('start!');
+    this.log('start!');
 
-    this.interval = setInterval(() => {
-      log('5 seconds passed');
-    }, 5000);
+    this.app.use('/graphql', graphqlMiddleware());
+
+    this.server = this.app.listen(4000);
+
+    const addressInfo = this.server.address();
+    const address     = !addressInfo || typeof addressInfo === 'string' ? addressInfo
+      : (({ port }) => `http://0.0.0.0:${port}/graphql`)(addressInfo);
+
+    this.log(`Running a GraphQL API server at ${address}`);
   }
 }
